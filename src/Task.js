@@ -1,12 +1,26 @@
-export const Task = (props) => {
+import React from "react";
+import { useState, useEffect } from "react";
+
+export const Text = () => {
+    const [text, setText] = useState("");
+
+    useEffect(() => {
+        console.log("COMPONENT MOUNTED");
+
+        return () => {
+            console.log("COMPOENNT UNMOUNTED");
+        }
+    }, []);
+
     return (
-        <div className="task"
-        style={{ backgroundColor: props.completed ? "green" : "white" }} /*  IF the props are TRUE(completed), make it green. Otherwise, its WHITE   */
-        >
-            <h1>{props.taskName}</h1>
-            <button onClick={() => props.completedTask(props.id)}> Complete </button>
-            <button onClick={() => props.deleteTask(props.id)}> X </button>
+        <div>
+            <input
+                onChange={(event) => {
+                    setText(event.target.value);
+                }}
+            />
+
+            <h1> {text}</h1>
         </div>
     );
-}
-
+};
