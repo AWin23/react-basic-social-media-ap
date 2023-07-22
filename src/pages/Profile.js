@@ -1,22 +1,19 @@
+// Profile.jsx
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { ChangeProfile } from "../component/ChangeProfile";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
-export function Profile() {
-    let navigate = useNavigate(); // its a represneted function where once called, it navigates to the routes
-    let { username } = useParams();
+export const Profile = () => {
+  const { username } = useContext(AppContext);
 
-    const handleButtonClick = () => {
-        navigate("/about"); // Navigate to the "/menu" route
-    };
+  return (
+    <div>
+      {" "}
+      THIS IS THE PROFILE PAGE OF: {username}
+      <ChangeProfile />
 
-    return (
-        <div>
-           THIS IS THE PROFILE PAGE OF {username} 
-            <button onClick={handleButtonClick}>
-            {""}
-            Change to about page</button>
-        </div>
-    );
-}
-
-
+      { /*Use setUserName prop*/}
+    </div>
+  );
+};
