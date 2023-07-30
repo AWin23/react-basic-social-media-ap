@@ -5,30 +5,26 @@ import { About } from "./pages/About";
 import { Profile } from "./pages/Profile";
 import { Navbar } from "./pages/Navbar";
 import { useState, createContext } from "react";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export const AppContext = createContext(); // used WHEN you want GROUP OF compoents to have acccess to same "data?
 // When you have data that needs to be accessed by multiple components in your application, you can create a 
 //  context to hold that data and use the useContext hook in the child components to access and use that data.
 
 function App() {
-  const [username, setUsername] = useState("Andrew Nguyen");
+  const client = new QueryClient({defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    }
+  }});
 
   return (
     <div className="App">
-      <AppContext.Provider value={{ username, setUsername }}>
+      <QueryClientProvider client={client}>
 
-        <Router> {/* The <Router> component is the root component that needs to be placed around your entire application to enable routing functionality. 
-      It provides the underlying routing infrastructure for React Router DOM.
-      */}
-
-          <Navbar />
-          {/* ANYTHING YOU DO BELOW THOSE LINKS (OR NAVBAR COMPONENT") WILL CHANGE DEPENDING ON WHICH COMPONENT WE ARE IN */}
-
-
-          {/* ROUTES IS USED TO DEFINE ALL THE ROUTES*/}
+        <Router>
+          {/* <Navbar /> */}
           <Routes>
-
-            {/* define a specific route. It specifies the URL path for which the component should be rendered.*/}
             <Route path="/" element={<Home />} />
             <Route path="/profile"
               element={<Profile />}
@@ -36,9 +32,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="*" element={<h1> 404 PAGE NOT FOUND </h1>} />
           </Routes>
-          <div> Footer  </div>
         </Router>
-      </AppContext.Provider>
+      </QueryClientProvider>
     </div>
 
   )
